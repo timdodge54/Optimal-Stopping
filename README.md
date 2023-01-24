@@ -11,7 +11,7 @@
   * the follwing logic is used to decide whether to decrement and by how much
 
      ```python3
-        if np.random.rand() < percent_diff:
+        if np.random.rand() > percent_diff:
             max_look -= 1*(1+percent_diff)
     ```
 
