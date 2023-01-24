@@ -22,8 +22,8 @@
 
 | Scenario # | Derived Optimal | 37 percent rule|
 | --------   | -----------     | ----------- |
-|   #1       |  96             | 56          |
-|   #2       |  86             | 72          |
+|   #1       |  99             | 56          |
+|   #2       |  95             | 72          |
 
 ## Results Problem 2
 

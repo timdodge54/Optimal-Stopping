@@ -1,7 +1,7 @@
 import typing
+from copy import deepcopy
 from multiprocessing.pool import Pool
 from sys import argv
-from copy import deepcopy
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -39,14 +39,16 @@ def loop_logic(
     return (stopping_num, len(success))
 
 
-def _decrement_max(max_: int, loop_number: int, stop_number: int, len_list: int) -> float:
+def _decrement_max(
+    max_: int, loop_number: int, stop_number: int, len_list: int
+) -> float:
     """Decrement the max value based on the loop number."""
     if loop_number < stop_number:
         return max_
     total_diff = len_list - stop_number
     percent_diff = (loop_number - stop_number) / total_diff
-    if np.random.random() > percent_diff:
-        return max_ - (1* (1+percent_diff))
+    if np.random.random() < percent_diff:
+        return max_ - (1 * (1 + percent_diff))
     return max_
 
 
@@ -79,7 +81,7 @@ def max_benifit_stopping_loop(
                     list_of_reward.append(reward)
                     break
     average_reward = np.mean(list_of_reward)
-                
+
     return average_reward, stopping_number
 
 
@@ -93,12 +95,15 @@ def max_benifit_stopping(n: int) -> None:
     listss = []
     list_uniform = [np.random.uniform(1, 99, size=(99)) for _ in range(n)]
     listss.append(list_uniform)
-    list_normal = [np.random.normal(50, 10, size=(99))  for _ in range(n)]
-    list_normal_cap = [[99 if num > 99 else 0 if num < 0 else num for num in list_] for list_ in list_normal]
+    list_normal = [np.random.normal(50, 10, size=(99)) for _ in range(n)]
+    list_normal_cap = [
+        [99 if num > 99 else 0 if num < 0 else num for num in list_]
+        for list_ in list_normal
+    ]
     listss.append(list_normal_cap)
     for i, lists in enumerate(listss):
         list_of_best_indecies = np.zeros(99)
-        params = [(i, lists ) for i in range(99)]
+        params = [(i, lists) for i in range(99)]
         with Pool() as pool:
             for result in pool.starmap(max_benifit_stopping_loop, params):
                 best_index, stopping_number = result
@@ -112,6 +117,7 @@ def max_benifit_stopping(n: int) -> None:
             plt.title("Normal Distribution")
         plt.show()
 
+
 def optimial_stopping(list_: typing.List[int], stopping_num: int) -> int:
     max_look = max(list_[:stopping_num])
     for i, num in enumerate(list_[stopping_num:]):
@@ -120,8 +126,9 @@ def optimial_stopping(list_: typing.List[int], stopping_num: int) -> int:
             return num
     return list_[-1]
 
+
 def percent_37(list_: typing.List[int]) -> int:
-    thirty_seven = int(len(list_) * .37)
+    thirty_seven = int(len(list_) * 0.37)
     max_look = max(list_[:thirty_seven])
     for i, num in enumerate(list_[thirty_seven:]):
         if num > max_look:
@@ -152,11 +159,11 @@ def _main(files: typing.List[str] = None):
     if files:
         list_of_lists = []
         for file in files:
-            try: 
+            try:
                 with open(file) as f:
                     info = np.genfromtxt(file, dtype=int)
                     index_stopping = int(len(info) * index_of_best)
-                    optimal_value  = optimial_stopping(info, index_stopping)
+                    optimal_value = optimial_stopping(info, index_stopping)
                     thirty_seven = percent_37(info)
                     print(f"Optimal Value: {optimal_value}")
                     print(f"37% Value: {thirty_seven}")
@@ -166,9 +173,10 @@ def _main(files: typing.List[str] = None):
             except FileNotFoundError:
                 print(f"File {file} not found")
                 exit()
-    
+
     # Part 2
     max_benifit_stopping(n)
+
 
 if __name__ == "__main__":
     if len(argv) >= 2:
