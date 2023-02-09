@@ -18,7 +18,7 @@
 ![Distribution of success rates](figures/vanilla_gen.png)
 
 * The maximum indicies normalized to percent of the data set size: 39.3%.
-* When this percentage is applide to the two given scenarios the following results are obtained:
+* When this percentage is applied to the two given scenarios the following results are obtained:
 
 | Scenario # | Derived Optimal | 37 percent rule|
 | --------   | -----------     | ----------- |
