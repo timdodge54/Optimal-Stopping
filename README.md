@@ -6,7 +6,7 @@
 
 * ### Fall off algoritm
 
-  * A falloff algoritm detirments whenther or not the max look should be lowered.
+  * A falloff algoritm determines whenther or not the max look should be lowered.
   * max_look can be decremented with the percentage of (current index - stopping number)/ (end of list - stopping number) = percent_diff
   * the follwing logic is used to decide whether to decrement and by how much
 
